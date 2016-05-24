@@ -61,6 +61,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  def edit_roster
+    @students = @course.students
+    @newstudent = (flash[:newstudent]) ? Student.new(flash[:newstudent]) : Student.new
+  end
+
   def add_student
     @student = Student.get_student(params[:student].permit(:first_name, :last_name, :email, :studentid))
     if @student.is_a? String
@@ -77,7 +82,6 @@ class CoursesController < ApplicationController
     @student.courses.delete(@course)
     redirect_to :back, :alert => @student.first_name << " " << @student.last_name << " has been removed from this class."
   end
-end
 
   private
     # Use callbacks to share common setup or constraints between actions.

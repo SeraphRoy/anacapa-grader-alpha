@@ -70,7 +70,6 @@ class StudentsController < ApplicationController
       render :json => @course, :status => :unprocessable_entity
     end
   end
-end
 
   private
     # Use callbacks to share common setup or constraints between actions.
