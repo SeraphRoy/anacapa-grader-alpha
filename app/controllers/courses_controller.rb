@@ -83,6 +83,21 @@ class CoursesController < ApplicationController
     redirect_to :back, :alert => @student.first_name << " " << @student.last_name << " has been removed from this class."
   end
 
+  def csv_course_roster
+    begin
+      @course.import(params[:file])
+      redirect_to :back, :notice => "Students successfully added to course."
+    rescue Exception => e
+      redirect_to :back, :alert => "There were problems importing students from the file."
+    end
+  end
+
+  def export_course_roster_csv
+    csv_out = @course.export
+    filename = @course.course_slug + "_roster.csv"
+    send_data csv_out, :filename => filename
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
